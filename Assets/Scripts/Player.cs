@@ -41,8 +41,14 @@ public class Player : MonoBehaviour {
 			ground = true;
 			//print("I remember touch...");
 		}
+		if (other.gameObject.CompareTag ("spike")) {
+			transform.position = new Vector2 (-8f, -2f);
+
+		}
 		if (other.gameObject.CompareTag ("Finish")) {
-			SceneManager.LoadScene(2);
+			SceneManager.LoadScene (SceneManager.GetActiveScene ().buildIndex + 1);	
+			Time.timeScale = 0.0f;
+
 		}
 
 

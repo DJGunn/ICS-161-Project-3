@@ -18,7 +18,7 @@ public class Player2Controller : MonoBehaviour {
 	void Update () {
 		transform.position = new Vector2 (transform.position.x, transform.position.y);
 		if (Input.GetKeyDown(KeyCode.UpArrow)&&ground) {
-			GetComponent<Rigidbody2D>().AddForce(new Vector2(0,35), ForceMode2D.Impulse);
+			GetComponent<Rigidbody2D>().AddForce(new Vector2(0,40), ForceMode2D.Impulse);
 			ground = false;
 			//transform.Translate (Vector2.up * Time.deltaTime * velocity);
 		}
@@ -42,8 +42,14 @@ public class Player2Controller : MonoBehaviour {
 			ground = true;
 			//print("I remember touch...");
 		}
+		if (other.gameObject.CompareTag ("spike")) {
+			transform.position = new Vector2 (8f, 0f);
+
+		}
 		if (other.gameObject.CompareTag ("Finish")) {
-			SceneManager.LoadScene(3);
+			SceneManager.LoadScene (SceneManager.GetActiveScene ().buildIndex + 1);
+			Time.timeScale = 0.0f;
+
 		}
 
 	}
