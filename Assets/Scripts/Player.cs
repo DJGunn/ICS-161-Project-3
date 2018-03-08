@@ -10,6 +10,8 @@ public class Player : MonoBehaviour {
 	public bool ground;
 	public float floor = -4.3f;
 	public float ceiling = 4.3f;
+	public int score;
+
 	// Use this for initialization
 	void Start () {
 	}
@@ -45,9 +47,20 @@ public class Player : MonoBehaviour {
 			transform.position = new Vector2 (-8f, -2f);
 
 		}
+		if (other.gameObject.CompareTag ("spring")) {
+			GetComponent<Rigidbody2D>().AddForce(new Vector2(0,100), ForceMode2D.Impulse);
+			ground = false;
+		}
 		if (other.gameObject.CompareTag ("Finish")) {
-			SceneManager.LoadScene (SceneManager.GetActiveScene ().buildIndex + 1);	
 			Time.timeScale = 0.0f;
+			score++;
+			if (score >= 2 && SceneManager.GetActiveScene ().buildIndex == 3) {
+				SceneManager.LoadScene (4);
+			} 
+			else {
+				SceneManager.LoadScene (SceneManager.GetActiveScene ().buildIndex + 1);
+			}
+
 
 		}
 
