@@ -5,46 +5,28 @@ using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour {
 
-    public int score;
+    [Range(1, 10)]
+    public float jumpVelocity;
+
     public float speed;
     public bool winGame;
-    public bool iFrames; //If true, player invincible
-    public float iFrameTimer; //How long we want the player to be invincible on damage
-    //public GameObject projectilePrefab;
+    public bool isPlayer2;
 
-    private Vector2 cursorInWorldPos, movement, myPos;
-    private bool iFrameBlink, isGamePaused, isGameOver; //iFrame, game pause, and game over flags
-    //private Animator animator;
-    private Text scoreText;
-    private Text healthText;
-    private Text finalScoreText;
+    private Text scoreText, finalScoreText;
     private GameObject backgroundLose, backgroundWin;
-    private float timeSinceLastShot;
-    private float shotTimeThreshold;
-    
+    private Rigidbody2D myRB;
 
-    public int health;
+    private int score;
+    private float fallMultiplier, lowJumpMultiplier;
+    private bool isGamePaused, isGameOver;
 
     // Use this for initialization
     void Start () {
-
         score = 0;
-        health = 5;
-
-        movement = new Vector2();
-        myPos = new Vector2();
-
-        //player does not start invincible, sorry :P
-        iFrames = iFrameBlink = false; //default to not blinking and not invulnerable
-        iFrameTimer = 2.0f; // default 1 sec invulnerability
 
         isGameOver = isGamePaused = false; //game is not over or paused by default
 
-        //get our animator
-        //animator = GetComponent<Animator>();
-
         scoreText = GameObject.Find("ScoreText").GetComponent<Text>();
-        healthText = GameObject.Find("HealthText").GetComponent<Text>();
         backgroundLose = GameObject.Find("BackgroundLose");
         backgroundWin = GameObject.Find("BackgroundWin");
         
@@ -53,28 +35,17 @@ public class PlayerController : MonoBehaviour {
         backgroundLose.SetActive(false);
         backgroundWin.SetActive(false);
 
-        timeSinceLastShot = 0.0f;
-        shotTimeThreshold = 0.35f;
-
         winGame = false;
+
+        fallMultiplier = 2.5f;
+        lowJumpMultiplier = 3.0f;
+
+        myRB = GetComponent<Rigidbody2D>();
     }
     
     void OnCollisionEnter2D(Collision2D coll)
     {
-        if (coll.gameObject.tag == "EnemyBullet")
-        {
-            health--;
-            iFrames = true; //gain momentary invulnerability
-            Destroy(coll.gameObject);
-            //animator.SetTrigger("ninjaHit");
 
-            if (health <= 0)
-            {
-                updateGameText();
-                //animator.SetBool("ninjaDead", true);
-                setGameOver();
-            }
-        }
     }
 
     //occurs every frame
@@ -85,28 +56,17 @@ public class PlayerController : MonoBehaviour {
 
         if (!isGameOver && !isGamePaused) //only update the game logic if the game isn't over or isn't paused
         {
-            if (!iFrames)
-                score++;
 
             updateGameText();
 
+            if (Input.GetButtonDown("Jump") &&  Mathf.Abs( myRB.velocity.y ) <= .5f ) { myRB.velocity += Vector2.up * jumpVelocity; }
 
-            /*(if (Input.GetButtonDown("Fire1") && timeSinceLastShot > shotTimeThreshold)
-            {
-                timeSinceLastShot = 0;
+            if (Input.GetAxisRaw("Horizontal") > 0) { myRB.velocity = Vector2.Scale(myRB.velocity, Vector2.up) + Vector2.right * speed * Time.deltaTime; }
+            else if (Input.GetAxisRaw("Horizontal") < 0) { myRB.velocity = Vector2.Scale(myRB.velocity, Vector2.up) + Vector2.left * speed * Time.deltaTime; }
+            else myRB.velocity = Vector2.Scale(myRB.velocity, Vector2.up);
 
-                cursorInWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-
-                Vector2 direction = cursorInWorldPos - myPos;
-                direction.Normalize();
-                GameObject projectile = (GameObject)Instantiate(projectilePrefab, myPos, Quaternion.identity);
-                Physics2D.IgnoreCollision(projectile.GetComponent<Collider2D>(), GetComponent<Collider2D>(), true);
-                projectile.GetComponent<Rigidbody2D>().velocity = direction * speed;
-
-                //set TTL for the shuriken
-                Destroy(projectile, 3.0f);
-            }
-            else timeSinceLastShot += Time.deltaTime;*/
+            if (myRB.velocity.y < 0) { myRB.velocity += Vector2.up * Physics2D.gravity.y * (fallMultiplier - 1) * Time.deltaTime; }
+            else if (myRB.velocity.y > 0 && !Input.GetButton("Jump")) { myRB.velocity += Vector2.up * Physics2D.gravity.y * (lowJumpMultiplier - 1) * Time.deltaTime; }
 
         } //code below this line will still run when the game is paused or over
     }
@@ -134,7 +94,6 @@ public class PlayerController : MonoBehaviour {
     void updateGameText()
     {
         scoreText.text = "Score: " + score;
-        healthText.text = "Health: " + health;
     }
 
     //occurs based on set time, independent of frame
@@ -142,52 +101,7 @@ public class PlayerController : MonoBehaviour {
     {
         if (!isGameOver && !isGamePaused) //only update the game logic if the game isn't over or isn't paused
         {
-            //updateScoreText();
-            //get player's inputs and move us
-            movement.x = Input.GetAxisRaw("Horizontal") * Time.deltaTime * speed;
-            movement.y = Input.GetAxisRaw("Vertical") * Time.deltaTime * speed;
 
-            /*if (movement.x != 0 || movement.y != 0) animator.SetBool("ninjaWalk", true);
-            else animator.SetBool("ninjaWalk", false);*/
-
-            gameObject.GetComponent<Rigidbody2D>().velocity = movement * speed * 10;
-
-            //myPos = gameObject.transform.position;
-            //gameObject.GetComponent<Rigidbody2D>().velocity
-
-            if (Input.GetAxisRaw("Horizontal") > 0) gameObject.GetComponent<Rigidbody2D>().velocity = Vector2.right * speed;
-            else if (Input.GetAxisRaw("Horizontal") < 0) gameObject.GetComponent<Rigidbody2D>().velocity = Vector2.left * speed;
-            else gameObject.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-
-            movement.x = 0f;
-            movement.y = 0f;
-
-            if (iFrames) //if we go invincible
-            {
-                if (iFrameTimer > 0)
-                {
-                    //reduce time
-                    iFrameTimer -= Time.deltaTime;
-
-                    if (!iFrameBlink) //if player is visible
-                    {
-                        GetComponent<SpriteRenderer>().color -= new Color(0, 0, 0, 255); //make the player transparent
-                        iFrameBlink = !iFrameBlink; // toggle iframe blink
-                    }
-                    else //player is blinking
-                    {
-                        GetComponent<SpriteRenderer>().color += new Color(0, 0, 0, 255); //make the player apparent
-                        iFrameBlink = !iFrameBlink; // toggle iframe blink
-                    }
-                }
-                else //turn off iframes, reset timer, clear blink flag
-                {
-                    iFrames = false; //turn off iframes
-                    iFrameTimer = 2.0f; //reset timer
-                    if (iFrameBlink) GetComponent<SpriteRenderer>().color += new Color(0, 0, 0, 255); //Ensure the player is visible if they weren't
-                    iFrameBlink = false; //ensure iframe isn't blinking anymore
-                }
-            }
         } //anything below this will still run when the game is paused or over
 
 
@@ -196,8 +110,7 @@ public class PlayerController : MonoBehaviour {
     public void setGameOver()
     {
         isGameOver = true;
-        //animator.SetBool("ninjaWalk", false);
-        gameObject.GetComponent<Rigidbody2D>().velocity = movement * 0;
+        myRB.velocity = Vector2.zero;
 
         if (!winGame) backgroundLose.SetActive(true);
         else
