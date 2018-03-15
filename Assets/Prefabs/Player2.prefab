@@ -39,6 +39,7 @@ GameObject:
   - component: {fileID: 114757371068981844}
   - component: {fileID: 61630374573072228}
   - component: {fileID: 61219729954191950}
+  - component: {fileID: 114684671659834278}
   m_Layer: 0
   m_Name: Player2
   m_TagString: Player
@@ -87,7 +88,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 25
+  m_GravityScale: 1
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
@@ -143,6 +144,23 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 8.75, y: 7}
   m_EdgeRadius: 0
+--- !u!114 &114684671659834278
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1561949845381650}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b68806e8f83b48a1b5dfe4197aa1e6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  jumpVelocity: 10
+  velocity: 10
+  speed: 1000
+  ground: 0
+  floor: -4.3
+  ceiling: 4.3
 --- !u!114 &114757371068981844
 MonoBehaviour:
   m_ObjectHideFlags: 1
