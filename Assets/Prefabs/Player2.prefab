@@ -36,7 +36,6 @@ GameObject:
   - component: {fileID: 4132427945127006}
   - component: {fileID: 212925495401282590}
   - component: {fileID: 50794429306288508}
-  - component: {fileID: 114757371068981844}
   - component: {fileID: 61630374573072228}
   - component: {fileID: 61219729954191950}
   - component: {fileID: 114684671659834278}
@@ -55,7 +54,7 @@ Transform:
   m_GameObject: {fileID: 1561949845381650}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 7.33, y: 5.31, z: 0}
-  m_LocalScale: {x: 0.15731104, y: 0.14999999, z: 0.14999999}
+  m_LocalScale: {x: 0.3, y: 0.3, z: 0.14999999}
   m_Children: []
   m_Father: {fileID: 4233921675380352}
   m_RootOrder: 0
@@ -106,18 +105,18 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0.04314041, y: 0.12946415}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 8.75, y: 7}
+    oldSize: {x: 2.75, y: 2.5}
     newSize: {x: 4.75, y: 9.75}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 8.75, y: 7}
+  m_Size: {x: 3.3125477, y: 3.288721}
   m_EdgeRadius: 0
 --- !u!61 &61630374573072228
 BoxCollider2D:
@@ -131,18 +130,18 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.000014781952, y: 0.026304483}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 8.75, y: 7}
+    oldSize: {x: 2.75, y: 2.5}
     newSize: {x: 4.75, y: 9.75}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 8.75, y: 7}
+  m_Size: {x: 3.0536203, y: 3.1498027}
   m_EdgeRadius: 0
 --- !u!114 &114684671659834278
 MonoBehaviour:
@@ -156,26 +155,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   jumpVelocity: 10
-  velocity: 10
   speed: 1000
-  ground: 0
   floor: -4.3
   ceiling: 4.3
---- !u!114 &114757371068981844
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1561949845381650}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bddf02b3578964b5d9d5f356ea6944f4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  velocity: 10
-  ground: 0
-  floor: -4.3
-  ceiling: 4.3
+  ecks: 0
+  why: 0
 --- !u!212 &212925495401282590
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -210,7 +194,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 2
-  m_Sprite: {fileID: 21300000, guid: 80eb67d46a1c7464183f794f93ffa276, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 873f11a2875c54aea92c72f4fb8b4073, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

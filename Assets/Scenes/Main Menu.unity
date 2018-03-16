@@ -2968,9 +2968,9 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "Tutorial: Player 2\n\nPlayer 2 is a cloud of Purple Rain.\nMove the character
-    from left to right \nwith the left and right arrow keys.\nJump with the up arrow
-    key."
+  m_Text: "Tutorial: Player 2\n\nPlayer 2 is Lookie, \na Blueberry-flavored Cat.\nMove
+    the character from left to right \nwith the left and right arrow keys.\nJump with
+    the up arrow key."
 --- !u!222 &1802273386
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3117,8 +3117,8 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "Tutorial: Player 1\n\nPlayer 1 is a Green Alien.\nMove the character from
-    left to right \nwith 'A' and 'D.'\nJump with 'W.'"
+  m_Text: "Tutorial: Player 1\n\nPlayer 1 is Cookie, \na Cat made out of Bread.\nMove
+    the character from left to right \nwith 'A' and 'D.'\nJump with 'W.'"
 --- !u!222 &1937271490
 CanvasRenderer:
   m_ObjectHideFlags: 0
