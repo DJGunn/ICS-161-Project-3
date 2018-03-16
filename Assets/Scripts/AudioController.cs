@@ -4,13 +4,18 @@ using UnityEngine;
 
 public class AudioController : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-        Object.DontDestroyOnLoad(transform.gameObject);
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    private static AudioController _instance;
+
+    void Awake()
+    {
+        //if we don't have an [_instance] set yet
+        if (!_instance)
+            _instance = this;
+        //otherwise, if we do, kill this thing
+        else
+            Destroy(this.gameObject);
+
+
+        DontDestroyOnLoad(this.gameObject);
+    }
 }
