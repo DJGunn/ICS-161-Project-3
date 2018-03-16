@@ -16,9 +16,10 @@ public class Player : MonoBehaviour {
 	private Rigidbody2D myRB;
 	private float fallMultiplier, lowJumpMultiplier;
 
+    private AudioSource myAudio;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
 		//DontDestroyOnLoad(gameObject);
 		if(SceneManager.GetActiveScene ().buildIndex==1){
 			PlayerPrefs.SetInt ("Score", 0);
@@ -29,7 +30,9 @@ public class Player : MonoBehaviour {
 		lowJumpMultiplier = 15.0f;
 		//score = PlayerPrefs.GetInt ("Score");
 		myRB = GetComponent<Rigidbody2D>();
-	}
+
+        myAudio = GetComponent<AudioSource>();
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -51,7 +54,7 @@ public class Player : MonoBehaviour {
 		if (transform.position.y > ceiling) {
 			transform.position = new Vector2 (transform.position.x, ceiling);
 		}*/
-		if (Input.GetButtonDown("Jump_P1") &&  Mathf.Abs( myRB.velocity.y ) <= .5f ) { myRB.velocity += Vector2.up * jumpVelocity; }
+		if (Input.GetButtonDown("Jump_P1") &&  Mathf.Abs( myRB.velocity.y ) <= .5f ) { myRB.velocity += Vector2.up * jumpVelocity; myAudio.Play(); }
 
 		if (Input.GetAxisRaw("Horizontal_P1") > 0) { 
 			myRB.velocity = Vector2.Scale(myRB.velocity, Vector2.up) + Vector2.right * speed * Time.deltaTime; }
