@@ -10,16 +10,24 @@ public class Player : MonoBehaviour {
 	public float jumpVelocity;
 
 	public float speed;
-	static public int score;
+	static public int score = 0;
+	public float ecks;
+	public float why;
 	private Rigidbody2D myRB;
 	private float fallMultiplier, lowJumpMultiplier;
 
 
 	// Use this for initialization
 	void Start () {
+		//DontDestroyOnLoad(gameObject);
+		if(SceneManager.GetActiveScene ().buildIndex==1){
+			PlayerPrefs.SetInt ("Score", 0);
+			score = 0;
+			print("Game Start!");
+		}
 		fallMultiplier = 10f;
 		lowJumpMultiplier = 15.0f;
-
+		//score = PlayerPrefs.GetInt ("Score");
 		myRB = GetComponent<Rigidbody2D>();
 	}
 	
@@ -59,7 +67,7 @@ public class Player : MonoBehaviour {
 
 
 		if (other.gameObject.CompareTag ("spike")) {
-			transform.position = new Vector2 (-7f, 0f);
+			transform.position = new Vector2 (ecks,why);
 
 		}
 		if (other.gameObject.CompareTag ("spring")) {
@@ -68,9 +76,20 @@ public class Player : MonoBehaviour {
 		if (other.gameObject.CompareTag ("Finish")) {
 			Time.timeScale = 0.0f;
 			score++;
-			if (score >= 2 && SceneManager.GetActiveScene ().buildIndex == 3) {
-				SceneManager.LoadScene (4);
-			} 
+			print (score);
+			PlayerPrefs.SetInt ("Score", score);
+			//Destroy (gameObject);
+			if (SceneManager.GetActiveScene ().buildIndex == 3) {
+				if (score > 2) {
+					print ("you won");
+					SceneManager.LoadScene (4);
+					//PlayerPrefs.SetInt ("Score", 0);
+					//score = 0;
+				} 
+				else{
+					SceneManager.LoadScene (5);
+				}
+			}
 			else {
 				SceneManager.LoadScene (SceneManager.GetActiveScene ().buildIndex + 1);
 			}

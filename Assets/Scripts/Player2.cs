@@ -11,11 +11,19 @@ public class Player2 : MonoBehaviour {
 	public float speed;
 	public float floor = -4.3f;
 	public float ceiling = 4.3f;
+	public float ecks;
+	public float why;
 	static public int score;
 	private Rigidbody2D myRB;
 	private float fallMultiplier, lowJumpMultiplier;
 	// Use this for initialization
 	void Start () {
+		//DontDestroyOnLoad(gameObject);
+		if(SceneManager.GetActiveScene ().buildIndex==1){
+			PlayerPrefs.SetInt ("Score2", 0);
+			score = 0;
+			print("Game Start!");
+		}
 		fallMultiplier = 2.5f;
 		lowJumpMultiplier = 15.0f;
 
@@ -58,7 +66,7 @@ public class Player2 : MonoBehaviour {
 	void OnTriggerEnter2D(Collider2D other){
 
 		if (other.gameObject.CompareTag ("spike")) {
-			transform.position = new Vector2 (7f, 0f);
+			transform.position = new Vector2 (ecks, why);
 
 		}
 		if (other.gameObject.CompareTag ("spring")) {
@@ -67,9 +75,17 @@ public class Player2 : MonoBehaviour {
 		if (other.gameObject.CompareTag ("Finish")) {
 			Time.timeScale = 0.0f;
 			score++;
-			if (score >= 2 && SceneManager.GetActiveScene ().buildIndex == 3) {
-				SceneManager.LoadScene (5);
-			} 
+			print (score);
+			PlayerPrefs.SetInt ("Score2", score);
+			if (SceneManager.GetActiveScene ().buildIndex == 3) {
+				if (score > 2) {
+					SceneManager.LoadScene (5);
+
+				} else {
+					SceneManager.LoadScene (4);
+
+				}
+			}
 			else {
 				SceneManager.LoadScene (SceneManager.GetActiveScene ().buildIndex + 1);
 			}
